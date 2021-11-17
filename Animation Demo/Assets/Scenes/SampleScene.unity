@@ -585,3 +585,33 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 1797d5a9431df3249a4c6e4099f8df20, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e5c226e8fb273634496c3ef07c6faaac, type: 3}
+--- !u!1 &1518682998 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e5c226e8fb273634496c3ef07c6faaac, type: 3}
+  m_PrefabInstance: {fileID: 1518682997}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1518682999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1518682998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95c518d9dcb77c046ab5e228c89426fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableFeetIK: 1
+  heightFromGroundRaycast: 1.14
+  raycastDownDistance: 1.5
+  environmentLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  pelvisOffset: 0
+  pelvisUpAndDownSpeed: 0.28
+  feetToIKPositionSpeed: 0.5
+  leftFootAnimVariableName: LeftFootCurve
+  rightFoorAnimVariableName: RightFootCurve
+  useProIKFeature: 0
+  showSolverDebug: 1
