@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class FollowPath : MonoBehaviour
 {
-
     public float speed = 1;
-    public int currentPoint = 0;
     Rigidbody body;
     GameObject[] waypoints;
     GameObject closestWaypoint;
@@ -14,12 +12,14 @@ public class FollowPath : MonoBehaviour
     
     private void ApproachPoint(GameObject target)
     {
-        Vector3 direction = Vector3.Normalize(target.transform.position - body.gameObject.transform.position);
+        Vector3 direction = Vector3.Normalize(target.transform.position - transform.position);
+        transform.forward = body.velocity.normalized;
         body.AddForce(direction * speed, ForceMode.Force);
     }
 
     private int GetCurrentTargetIndex()
     {
+        //probably don't need this
         for (int i = 0; i < waypoints.Length; i++)
         {
             if (waypoints[i] == targetWaypoint)
@@ -68,6 +68,7 @@ public class FollowPath : MonoBehaviour
     }
     private void Start()
     {
+        //fill the waypoint array, default the closest point to the first element, then scan through the array for the actual closest
         waypoints = GameObject.FindGameObjectsWithTag("Waypoint");
         body = this.GetComponent<Rigidbody>();
         closestWaypoint = waypoints[0];

@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//i stole this from https://www.habrador.com/tutorials/interpolation/1-catmull-rom-splines/
+//Code for rendering the lines between points, retreived from
+//https://www.habrador.com/tutorials/interpolation/1-catmull-rom-splines/
 
 //Interpolation between points with a Catmull-Rom spline
 public class CatmullRomSpline : MonoBehaviour
