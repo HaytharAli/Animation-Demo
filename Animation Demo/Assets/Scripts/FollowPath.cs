@@ -105,16 +105,18 @@ public class FollowPath : MonoBehaviour
         float totalLength = 0;
         Vector3 lastPoint, newPoint;
         lastPoint = p1;
+        //sample the current segment 5 times (t = 0, 0.25, 0.5, 0.75, 1)
         for (int i = 1; i <= 4; i++)
         {
             newPoint = GetCurvePosition(i/4, p0, p1, p2, p3);
 
             totalLength += (newPoint - lastPoint).magnitude;
+
+            lastPoint = newPoint;
         }
         return totalLength;
     }
 
-    //check all the tagged waypoints for which is closest
     private GameObject ScanClosestPoint()
     {
         foreach (var waypoint in waypoints)
