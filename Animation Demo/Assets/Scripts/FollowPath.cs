@@ -6,6 +6,7 @@ public class FollowPath : MonoBehaviour
 {
     public float speed = 1;
     float t = 0;
+    public float currentSpeed;
     Rigidbody body;
     GameObject[] waypoints;
     GameObject closestWaypoint;
@@ -24,7 +25,7 @@ public class FollowPath : MonoBehaviour
         return 0;
     }
 
-    Vector3 GetCatmullRomPosition(float t, Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3)
+    Vector3 GetCurvePosition(float t, Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3)
     {
         Vector3 a = 2f * p1;
         Vector3 b = p2 - p0;
@@ -38,9 +39,9 @@ public class FollowPath : MonoBehaviour
 
     void MoveOnCurve()
     {
-        int p0 = 0, p1 = 0, p2 = 0, p3 = 0;
+        int p0, p1, p2, p3;
 
-        if (targetIndex == 0)// edge case if initial target ends up as the first element
+        if (targetIndex == 0)// edge case if initial target ends up as the first element, this can't actually happen because of the start function but i'll leave it in
         {
             p0 = waypoints.Length - 2;
             p1 = waypoints.Length - 1;
@@ -78,7 +79,15 @@ public class FollowPath : MonoBehaviour
             p3 = targetIndex + 1;
         }
 
-        Vector3 curvePos = (GetCatmullRomPosition(
+        float length = SegmentLength(
+            waypoints[p0].transform.position,
+            waypoints[p1].transform.position,
+            waypoints[p2].transform.position,
+            waypoints[p3].transform.position);
+
+        t += Time.deltaTime / length * 5;
+
+        Vector3 curvePos = (GetCurvePosition(
             t,
             waypoints[p0].transform.position,
             waypoints[p1].transform.position,
@@ -88,6 +97,21 @@ public class FollowPath : MonoBehaviour
         Vector3 direction = curvePos - transform.position;
 
         body.AddForce(direction * speed, ForceMode.Force);
+        transform.forward = direction;
+    }
+
+    float SegmentLength(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3)
+    {
+        float totalLength = 0;
+        Vector3 lastPoint, newPoint;
+        lastPoint = p1;
+        for (int i = 1; i <= 4; i++)
+        {
+            newPoint = GetCurvePosition(i/4, p0, p1, p2, p3);
+
+            totalLength += (newPoint - lastPoint).magnitude;
+        }
+        return totalLength;
     }
 
     //check all the tagged waypoints for which is closest
@@ -117,11 +141,10 @@ public class FollowPath : MonoBehaviour
 
     private void Update()
     {
-        t += Time.deltaTime / 4;
         if (t < 1)
         {
             MoveOnCurve();
-
+            currentSpeed = body.velocity.magnitude;
         }
         else
         {
