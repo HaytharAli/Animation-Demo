@@ -41,8 +41,10 @@ public class FollowPath : MonoBehaviour
     {
         int p0, p1, p2, p3;
 
-        if (targetIndex == 0)// edge case if initial target ends up as the first element, this can't actually happen because of the start function but i'll leave it in
+        if (targetIndex == 0)
         {
+            // edge case if initial target ends up as the first element,
+            // this can't actually happen because of the start function but i'll leave it in
             p0 = waypoints.Length - 2;
             p1 = waypoints.Length - 1;
             p2 = targetIndex;
@@ -85,14 +87,16 @@ public class FollowPath : MonoBehaviour
             waypoints[p2].transform.position,
             waypoints[p3].transform.position);
 
-        t += Time.deltaTime / length * 5;
+        t += Time.deltaTime / (length / 5);
+        Debug.Log(Time.deltaTime / (length / 5));
+        Debug.Log(t);
 
-        Vector3 curvePos = (GetCurvePosition(
+        Vector3 curvePos = GetCurvePosition(
             t,
             waypoints[p0].transform.position,
             waypoints[p1].transform.position,
             waypoints[p2].transform.position,
-            waypoints[p3].transform.position));
+            waypoints[p3].transform.position);
 
         Vector3 direction = curvePos - transform.position;
 
@@ -105,7 +109,7 @@ public class FollowPath : MonoBehaviour
         float totalLength = 0;
         Vector3 lastPoint, newPoint;
         lastPoint = p1;
-        //sample the current segment 5 times (t = 0, 0.25, 0.5, 0.75, 1)
+        //sample the current segment 4 times (0.25, 0.5, 0.75, 1)
         for (int i = 1; i <= 4; i++)
         {
             newPoint = GetCurvePosition(i/4, p0, p1, p2, p3);
