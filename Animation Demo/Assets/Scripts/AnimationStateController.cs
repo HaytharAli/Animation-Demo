@@ -31,10 +31,8 @@ public class AnimationStateController : MonoBehaviour
     {
         bool forwardPressed = Input.GetKey(KeyCode.W);
         bool runPressed = Input.GetKey(KeyCode.LeftShift);
-        bool jumpPressed = Input.GetKey(KeyCode.Space);
         bool isWalking = anim.GetBool(isWalkingID);
         bool isRunning = anim.GetBool(isRunningID);
-        bool isJumping = anim.GetBool(isJumpingID);
 
 
         if (!isWalking && forwardPressed)
@@ -61,16 +59,6 @@ public class AnimationStateController : MonoBehaviour
         //    anim.SetBool(isJumpingID, false);
         //}
         //else
-        if (jumpPressed)
-        {
-            anim.SetBool(isJumpingID, true);
-            //Jump
-            rb.AddForce(Vector3.up * 0.5f, ForceMode.Impulse);
-        }
-        else
-        {
-            anim.SetBool(isJumpingID, false);   
-        }
 
         if (Input.GetKeyDown(KeyCode.O))
         {
@@ -84,6 +72,23 @@ public class AnimationStateController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.X))
         {
             anim.SetBool(isDyingID, true);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        bool jumpPressed = Input.GetKey(KeyCode.Space);
+        bool isJumping = anim.GetBool(isJumpingID);
+        
+        if (jumpPressed)
+        {
+            anim.SetBool(isJumpingID, true);
+            //Jump
+            rb.AddForce(Vector3.up * 2f, ForceMode.Impulse);
+        }
+        else
+        {
+            anim.SetBool(isJumpingID, false);
         }
     }
 }

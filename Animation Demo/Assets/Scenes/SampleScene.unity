@@ -460,6 +460,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Daxter Fried Rice
       objectReference: {fileID: 0}
+    - target: {fileID: 5232728904777280206, guid: ff899d3ff2a9a1640889c7fd05d580e9, type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[0]
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff899d3ff2a9a1640889c7fd05d580e9, type: 3}
 --- !u!1001 &4937835567181588305
