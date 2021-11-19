@@ -5,6 +5,7 @@ using UnityEngine;
 public class FollowPath : MonoBehaviour
 {
     public float speed = 1;
+    public float lineFactor = 1;
     float t = 0;
     public float currentSpeed;
     Rigidbody body;
@@ -87,9 +88,7 @@ public class FollowPath : MonoBehaviour
             waypoints[p2].transform.position,
             waypoints[p3].transform.position);
 
-        t += Time.deltaTime / (length / 5);
-        Debug.Log(Time.deltaTime / (length / 5));
-        Debug.Log(t);
+        t += (Time.deltaTime / (length / 5)) * lineFactor;
 
         Vector3 curvePos = GetCurvePosition(
             t,
