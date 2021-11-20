@@ -51,7 +51,7 @@ public class FollowPath : MonoBehaviour
             p2 = targetIndex;
             p3 = 1;
         }
-        else if (targetIndex == 1)// if moving from fist to second
+        else if (targetIndex == 1)// if moving from first to second
         {
             p0 = waypoints.Length - 1;
             p1 = 0;
@@ -88,6 +88,7 @@ public class FollowPath : MonoBehaviour
             waypoints[p2].transform.position,
             waypoints[p3].transform.position);
 
+        //basic speed control, longer segments take longer to cross
         t += (Time.deltaTime / (length / 5)) * lineFactor;
 
         Vector3 curvePos = GetCurvePosition(
@@ -100,7 +101,7 @@ public class FollowPath : MonoBehaviour
         Vector3 direction = curvePos - transform.position;
 
         body.AddForce(direction * speed, ForceMode.Force);
-        transform.forward = direction;
+        transform.forward = direction; // turn towards where we're going
     }
 
     float SegmentLength(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3)
