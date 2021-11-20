@@ -73,18 +73,14 @@ public class AnimationStateController : MonoBehaviour
         {
             anim.SetBool(isDyingID, true);
         }
-    }
-
-    private void FixedUpdate()
-    {
-        bool jumpPressed = Input.GetKey(KeyCode.Space);
+        bool jumpPressed = Input.GetKeyDown(KeyCode.Space);
         bool isJumping = anim.GetBool(isJumpingID);
         
         if (jumpPressed)
         {
             anim.SetBool(isJumpingID, true);
             //Jump
-            rb.AddForce(Vector3.up * 2f, ForceMode.Impulse);
+            rb.AddForce(Vector3.up * 12f, ForceMode.Impulse);
         }
         else
         {

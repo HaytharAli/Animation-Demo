@@ -6,12 +6,18 @@ using System.Collections;
 
 public class HandIK : MonoBehaviour
 {
+    [Range(0, 2)] public float distanceForIK = 2f;
+    //[Range(0, 5)] public float originOffset = 1f;
+    
 
     Animator anim;
 
     public bool ikActive = false;
     public Transform rightHandObj = null;
     public Transform lookObj = null;
+
+    float HandIKWeight;
+    float HeadIKWeight;
 
     void Start()
     {
@@ -26,14 +32,16 @@ public class HandIK : MonoBehaviour
             {
                 if (lookObj != null)
                 {
-                    anim.SetLookAtWeight(1);
+
+                    anim.SetLookAtWeight(calcWeightFromDistance(HumanBodyBones.Head, lookObj, distanceForIK));
                     anim.SetLookAtPosition(lookObj.position);
                 }
 
                 if (rightHandObj != null)
                 {
-                    anim.SetIKPositionWeight(AvatarIKGoal.RightHand, 1);
-                    anim.SetIKRotationWeight(AvatarIKGoal.RightHand, 1);
+                    float weight = calcWeightFromDistance(HumanBodyBones.RightHand, rightHandObj, distanceForIK);
+                    anim.SetIKPositionWeight(AvatarIKGoal.RightHand, weight);
+                    anim.SetIKRotationWeight(AvatarIKGoal.RightHand, weight);
                     anim.SetIKPosition(AvatarIKGoal.RightHand, rightHandObj.position);
                     anim.SetIKRotation(AvatarIKGoal.RightHand, rightHandObj.rotation);
                 }
@@ -47,4 +55,16 @@ public class HandIK : MonoBehaviour
             }
         }
     }
+    
+    float calcWeightFromDistance(HumanBodyBones boneToWeigh, Transform IKTargetTrans, float maxDistance)
+    {
+        Vector3 ActorToObject = IKTargetTrans.position - anim.GetBoneTransform(boneToWeigh).position;
+        float distance = ActorToObject.magnitude;
+        float weight = maxDistance / distance;
+
+        weight -= 0.2f;
+        weight = weight / 0.7f;
+        return weight;
+    }
 }
+
